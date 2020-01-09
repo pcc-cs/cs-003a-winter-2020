@@ -1,0 +1,6 @@
+cc_binary(
+  name = "hello",
+  srcs = ["hello.cpp", "greeting.h", "greeting.cpp"],
+  copts = [],
+  deps = [],
+)
