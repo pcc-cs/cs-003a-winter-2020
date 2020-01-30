@@ -1,58 +1,39 @@
 #include <cstdio>
-#include <cstdlib>
-#include <cmath>
 
-#define CHAR() static_cast<unsigned char>(rand() % 256)
+namespace A {
+const char *clz = "CS003A";
+int count = 40;
 
-class Color {
+class Student {
  private:
-  unsigned char *_rgb;
+  double _grade = 0;
+
  public:
-  Color(unsigned char r, unsigned char g, unsigned char b) {
-    _rgb = new unsigned char[3];
-    _rgb[0] = r;
-    _rgb[1] = g;
-    _rgb[2] = b;
-  }
-  void dump() {
-    printf("rgb(%d, %d, %d)\n", _rgb[0], _rgb[1], _rgb[2]);
-  }
-  ~Color() {
-    printf("Color destructor!\n");
-    delete [] _rgb;
-  }
+  double getGrade() { return _grade; }
 };
+}  // namespace A
 
-class CarColor : public Color {
- private:
-  char *_buffer;
- public:
-  CarColor(unsigned char r, unsigned char g, unsigned char b) :
-    Color(r, g, b) {
-      _buffer = new char[0x100];
-    }
-  ~CarColor() {
-    printf("CarColor destructor!\n");
-    delete [] _buffer;
-  }
+namespace B {
+const char *clz = "CS003C";
+int count = 30;
+
+namespace C {
+enum class Book {
+  PYTHON2, PYTHON3
 };
+}  // namespace C
+}  // namespace B
 
-void randomColor() {
-  Color c(CHAR(), CHAR(), CHAR());
-  c.dump();
-}
-
-void randomCarColor() {
-  CarColor c(CHAR(), CHAR(), CHAR());
-  c.dump();
-}
+// Don't use this!
+using namespace A;
 
 int main() {
-  for (int i = 0; i < 3; i++) {
-    randomColor();
-  }
-  printf("\n");
-  for (int i = 0; i < 3; i++) {
-    randomCarColor();
-  }
+  printf("A::clz = %s, A::count = %d\n", A::clz, A::count);
+  printf("clz = %s, count = %d\n", clz, count);
+
+  printf("A::Student().getGrade() = %.2f\n", A::Student().getGrade());
+
+  printf("B::clz = %s, B::count = %d\n", B::clz, B::count);
+
+  printf("B::C::Book::PYTHON3 = %d\n", B::C::Book::PYTHON3);
 }

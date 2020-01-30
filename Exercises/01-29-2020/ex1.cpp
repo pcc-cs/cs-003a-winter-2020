@@ -1,42 +1,37 @@
 #include <cstdio>
-#include <string>
 
-class Class {
+class Counter {
  private:
-  std::string _name;
-  int _students = 0;
+  int _max;
+  int _count = 0;
  public:
-  explicit Class(std::string);
-  const char *getName();
-  int getStudents();
-  Class &operator++();
+  explicit Counter(int max) : _max(max) {
+  }
+  Counter(const Counter &c) {
+    _max = c._max;
+  }
+  Counter &operator++() {
+    if (_count < _max) {
+      ++_count;
+    }
+    return *this;
+  }
+  int getMax() {
+    return _max;
+  }
+  int getCount() {
+    return _count;
+  }
 };
 
-Class::Class(std::string name) : _name(name) {
-}
-
-const char *Class::getName() {
-  return _name.c_str();
-}
-
-int Class::getStudents() {
-  return _students;
-}
-
-Class &Class::operator++() {
-  ++_students;
-  return *this;
-}
-
 int main() {
-  Class c1("CS003A");
-  printf("%s students: %d\n", c1.getName(), c1.getStudents());
+  Counter c1(1);
+  printf("c1: count = %d, max = %d\n", c1.getCount(), c1.getMax());
+  ++c1;
+  printf("c1: count = %d, max = %d\n", c1.getCount(), c1.getMax());
+  ++c1;
+  printf("c1: count = %d, max = %d\n", c1.getCount(), c1.getMax());
 
-  printf("Students: %d\n", (++c1).getStudents());
-
-  printf("%p (before), %p (after)\n", &c1, &(++c1));
-
-  auto c2 = ++c1;
-  printf("c1 students: %d, c2 students: %d\n",
-    c1.getStudents(), c2.getStudents());
+  Counter c2 = c1;
+  printf("c2: count = %d, max = %d\n", c2.getCount(), c2.getMax());
 }
